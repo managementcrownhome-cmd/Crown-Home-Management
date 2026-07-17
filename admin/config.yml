@@ -1,0 +1,22 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "images/uploads"
+public_folder: "/images/uploads"
+
+collections:
+  - name: "properties"
+    label: "Featured Properties"
+    folder: "_properties"
+    create: true
+    slug: "{{slug}}"
+    extension: "json"
+    format: "json"
+    fields:
+      - { label: "Property Title", name: "title", widget: "string" }
+      - { label: "Location / City", name: "location", widget: "string" }
+      - { label: "Property Main Image", name: "image", widget: "image" }
+      - { label: "Number of Bedrooms", name: "bedrooms", widget: "number", value_type: "int", default: 2 }
+      - { label: "Number of Bathrooms", name: "bathrooms", widget: "number", value_type: "int", default: 1 }
+      - { label: "Furnished Status", name: "furnished", widget: "select", options: ["Fully Furnished", "Part-Furnished", "Unfurnished"] }

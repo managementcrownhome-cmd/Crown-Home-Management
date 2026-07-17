@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Crown Home Management - Admin Portal</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+    <h1>Property Entry Portal</h1>
+    <input type="text" id="title" placeholder="Property Title"><br>
+    <input type="text" id="desc" placeholder="Description"><br>
+    <input type="number" id="rent" placeholder="Rent"><br>
+    <input type="text" id="status" placeholder="Status"><br>
+    <button onclick="saveProperty()">Save Property</button>
+
+    <script>
+        const SUPABASE_URL = 'https://vktrjzsexaqkhjhuhjbl.supabase.co';
+        const SUPABASE_KEY = 'sb_publishable_4GNMZoTHICADyt4Fb-DQcg_-4pf_GGA'; // Apni key yahan paste karein
+        const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+        async function saveProperty() {
+            const { data, error } = await supabase.from('properties').insert([
+                { 
+                    title: document.getElementById('title').value,
+                    description: document.getElementById('desc').value,
+                    rent: document.getElementById('rent').value,
+                    status: document.getElementById('status').value
+                }
+            ]);
+            if (error) alert("Error: " + error.message);
+            else alert("Property Added Successfully!");
+        }
+    </script>
+</body>
+</html>

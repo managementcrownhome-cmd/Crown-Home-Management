@@ -3,20 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <title>Crown Home Management</title>
+    <!-- Marked.js library jo Markdown ko HTML mein convert karegi -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 <body>
+
     <h1>Connecting Premium Tenants with Crown Home Management</h1>
-    
-    <!-- Yahan properties show hongi -->
-    <div id="properties-list"></div>
+
+    <div id="properties-container">
+        <p>Loading properties...</p>
+    </div>
 
     <script>
-        // Yeh script aapki 'properties' folder ki files ko fetch karegi
-        fetch('/properties/')
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById('properties-list').innerHTML = "Properties load ho rahi hain... (Iske liye backend integration chahiye)";
-            });
+        // Yeh script aapki properties folder se content layegi
+        async function loadProperties() {
+            try {
+                // Yahan hum manual list fetch kar rahe hain (GitHub Pages par iska simple tareeqa hai)
+                const response = await fetch('/properties/');
+                const text = await response.text();
+                
+                // Yahan hum simple parsing karenge. 
+                // Note: Professional setup ke liye hum GitHub API ya Decap CMS ka widget use karte hain.
+                document.getElementById('properties-container').innerHTML = "Properties folder setup ho gaya hai! CMS se data display karne ke liye aapko 'Static Site Generator' ki zarurat hogi.";
+            } catch (err) {
+                console.error("Error loading properties:", err);
+            }
+        }
+        loadProperties();
     </script>
 </body>
 </html>

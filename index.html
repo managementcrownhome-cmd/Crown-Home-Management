@@ -2,27 +2,21 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crown Home Management</title>
-    <!-- Netlify Identity Widget -->
-    <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
 </head>
 <body>
-
-    <!-- Yahan aapka baqi website ka design aur content aayega -->
     <h1>Connecting Premium Tenants with Crown Home Management</h1>
+    
+    <!-- Yahan properties show hongi -->
+    <div id="properties-list"></div>
 
-    <!-- Netlify Identity Script -->
     <script>
-      if (window.netlifyIdentity) {
-        window.netlifyIdentity.on("init", user => {
-          if (!user) {
-            window.netlifyIdentity.on("login", () => {
-              document.location.href = "/admin/";
+        // Yeh script aapki 'properties' folder ki files ko fetch karegi
+        fetch('/properties/')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('properties-list').innerHTML = "Properties load ho rahi hain... (Iske liye backend integration chahiye)";
             });
-          }
-        });
-      }
     </script>
 </body>
 </html>

@@ -1,0 +1,1424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crown Home Management | Premium UK Lettings & Property Solutions</title>
+    <!-- Favicon Addition -->
+    <link rel="icon" type="image/jpeg" href="logo.jpeg">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    <style>
+        :root {
+            --primary: #0b1a30;
+            --primary-light: #162942;
+            --accent: #d4af37; /* Premium Gold */
+            --accent-hover: #b89324;
+            --text-dark: #2d3748;
+            --text-light: #f7fafc;
+            --gray-bg: #f8fafc;
+            --white: #ffffff;
+            --transition-fast: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-cool: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            --transition-smooth: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            --luxury-shadow: 0 10px 30px rgba(11, 26, 48, 0.08);
+            --gold-glow: 0 0 20px rgba(212, 175, 55, 0.25);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Playfair Display', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            color: var(--text-dark);
+            background-color: var(--white);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* --- HIGH ENERGY SCROLL & LOAD ANIMATIONS --- */
+        .reveal-up {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: var(--transition-smooth);
+        }
+        .reveal-left {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: var(--transition-smooth);
+        }
+        .reveal-right {
+            opacity: 0;
+            transform: translateX(50px);
+            transition: var(--transition-smooth);
+        }
+        .reveal-scale {
+            opacity: 0;
+            transform: scale(0.85);
+            transition: all 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        /* Static active trigger class managed via JavaScript */
+        .active-reveal {
+            opacity: 1;
+            transform: translateY(0) translateX(0) scale(1);
+        }
+
+        /* Delay Utilities for Staggered Animations */
+        .delay-1 { transition-delay: 0.15s; }
+        .delay-2 { transition-delay: 0.3s; }
+        .delay-3 { transition-delay: 0.45s; }
+
+        /* Utility Classes */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 14px 30px;
+            border-radius: 4px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition-cool);
+            cursor: pointer;
+            border: none;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            letter-spacing: 0.5px;
+            font-size: 15px;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+            z-index: -1;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary {
+            background-color: var(--accent);
+            color: var(--primary);
+            box-shadow: var(--gold-glow);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--accent-hover);
+            color: var(--white);
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(212, 175, 55, 0.4);
+        }
+
+        .btn-outline {
+            border: 2px solid var(--accent);
+            color: var(--accent);
+            background: transparent;
+        }
+
+        .btn-outline:hover {
+            background-color: var(--accent);
+            color: var(--primary);
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: var(--gold-glow);
+        }
+
+        /* Header & Navigation */
+        header {
+            background-color: rgba(11, 26, 48, 0.95);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 30px rgba(0,0,0,0.15);
+            transition: var(--transition-fast);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 90px;
+        }
+
+        .logo {
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: var(--transition-cool);
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .logo-img-wrapper {
+            height: 55px;
+            width: 55px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 2px solid var(--accent);
+            box-shadow: var(--gold-glow);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--primary);
+            flex-shrink: 0;
+        }
+
+        .logo-img {
+            background-image: url('logo.jpeg');
+            background-size: cover;
+            background-position: center;
+            width: 100%;
+            height: 100%;
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            line-height: 1.1;
+        }
+
+        .logo-title {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--white);
+            letter-spacing: 1px;
+        }
+
+        .logo-subtitle {
+            font-size: 10px;
+            font-weight: 600;
+            color: var(--accent);
+            letter-spacing: 1.5px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            padding: 5px 0;
+            transition: var(--transition-fast);
+            font-size: 15px;
+            letter-spacing: 0.5px;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            transform: scaleX(0);
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: var(--accent);
+            transform-origin: bottom right;
+            transition: transform 0.3s cubic-bezier(0.5,1,0.8,1);
+        }
+
+        nav a:hover::after, nav a.active::after {
+            transform: scaleX(1);
+            transform-origin: bottom left;
+        }
+
+        nav a:hover, nav a.active {
+            color: var(--accent);
+        }
+
+        .nav-ctas {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn-nav {
+            padding: 10px 20px;
+            font-size: 13.5px;
+        }
+
+        .hamburger {
+            display: none;
+            color: var(--white);
+            font-size: 26px;
+            cursor: pointer;
+            transition: var(--transition-fast);
+        }
+
+        .hamburger:hover {
+            transform: rotate(90deg);
+            color: var(--accent);
+        }
+
+        /* Hero Zoom Background Structure */
+        @keyframes bgZoom {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.08); }
+            100% { transform: scale(1); }
+        }
+
+        .hero {
+            position: relative;
+            height: 90vh;
+            display: flex;
+            align-items: center;
+            color: var(--white);
+            margin-top: 90px;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(11, 26, 48, 0.88), rgba(11, 26, 48, 0.88)), url('https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=1920&q=80') no-repeat center center/cover;
+            z-index: -1;
+            animation: bgZoom 20s infinite ease-in-out;
+        }
+
+        .hero-content {
+            max-width: 800px;
+        }
+
+        .hero h1 {
+            font-size: 52px;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 25px;
+            letter-spacing: -0.5px;
+        }
+
+        .hero h1 span {
+            color: var(--accent);
+            text-shadow: 0 2px 15px rgba(212, 175, 55, 0.2);
+        }
+
+        .hero p {
+            font-size: 20px;
+            margin-bottom: 40px;
+            color: #cbd5e1;
+            font-weight: 300;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+        }
+
+        /* Stats Bar */
+        .stats-bar {
+            background: var(--primary-light);
+            border-bottom: 4px solid var(--accent);
+            padding: 35px 0;
+            color: var(--white);
+            position: relative;
+            z-index: 5;
+            box-shadow: var(--luxury-shadow);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            text-align: center;
+            gap: 20px;
+        }
+
+        .stat-item {
+            transition: var(--transition-cool);
+        }
+
+        .stat-item:hover {
+            transform: translateY(-5px) scale(1.05);
+        }
+
+        .stat-item h3 {
+            font-size: 36px;
+            color: var(--accent);
+            margin-bottom: 5px;
+            font-weight: 800;
+        }
+
+        .stat-item p {
+            font-size: 13px;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-weight: 600;
+        }
+
+        /* Sections Styling */
+        section {
+            padding: 110px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 70px;
+        }
+
+        .section-title h2 {
+            font-size: 40px;
+            color: var(--primary);
+            margin-bottom: 18px;
+            font-weight: 800;
+        }
+
+        .section-title p {
+            color: #64748b;
+            max-width: 650px;
+            margin: 0 auto;
+            font-size: 17px;
+        }
+
+        /* Solutions Grid */
+        .solutions-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 35px;
+        }
+
+        .solution-card {
+            background: var(--white);
+            border-radius: 12px;
+            box-shadow: var(--luxury-shadow);
+            transition: var(--transition-cool);
+            border: 1px solid #e2e8f0;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .solution-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            border-color: var(--accent);
+            box-shadow: 0 30px 60px rgba(11, 26, 48, 0.18);
+        }
+
+        .image-wrapper {
+            width: 100%;
+            height: 240px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .solution-image, .feature-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-bottom: 4px solid var(--accent);
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .solution-card:hover .solution-image, .feature-card:hover .feature-image {
+            transform: scale(1.12);
+        }
+
+        .solution-info {
+            padding: 35px 30px;
+            text-align: center;
+            flex-grow: 1;
+            position: relative;
+        }
+
+        .solution-card i, .feature-card i {
+            font-size: 28px;
+            color: var(--accent);
+            margin-top: -55px;
+            margin-bottom: 20px;
+            background: var(--white);
+            width: 65px;
+            height: 65px;
+            line-height: 65px;
+            border-radius: 50%;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+            display: inline-block;
+            position: relative;
+            z-index: 2;
+            transition: var(--transition-cool);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        .solution-card:hover i, .feature-card:hover i {
+            background-color: var(--primary);
+            color: var(--accent);
+            box-shadow: var(--gold-glow);
+            transform: scale(1.15) rotate(360deg);
+        }
+
+        .solution-card h3 {
+            font-size: 22px;
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .solution-card p {
+            color: #475569;
+            font-size: 15px;
+            margin-bottom: 20px;
+        }
+
+        .learn-more-link {
+            display: inline-block;
+            font-weight: 700;
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 14px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            transition: var(--transition-fast);
+        }
+
+        .solution-card:hover .learn-more-link {
+            color: var(--primary);
+            letter-spacing: 1.5px;
+        }
+
+        /* Why Choose Us Section */
+        .why-join {
+            background-color: var(--gray-bg);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 35px;
+            margin-bottom: 70px;
+        }
+
+        .feature-card {
+            background: var(--white);
+            border-radius: 12px;
+            box-shadow: var(--luxury-shadow);
+            transition: var(--transition-cool);
+            border: 1px solid #e2e8f0;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-12px) scale(1.02);
+            border-color: var(--accent);
+            box-shadow: 0 25px 50px rgba(11, 26, 48, 0.1);
+        }
+
+        .feature-info {
+            padding: 35px 30px;
+            text-align: center;
+            flex-grow: 1;
+        }
+
+        .feature-card h3 {
+            font-size: 20px;
+            margin-bottom: 14px;
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        .feature-card p {
+            color: #475569;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        /* Comparison Table */
+        .comparison-wrapper {
+            background: var(--white);
+            padding: 45px;
+            border-radius: 12px;
+            box-shadow: var(--luxury-shadow);
+            overflow-x: auto;
+            transition: var(--transition-smooth);
+            border: 1px solid #e2e8f0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        th, td {
+            padding: 20px 25px;
+            border-bottom: 1px solid #e2e8f0;
+            transition: var(--transition-fast);
+            font-size: 15.5px;
+        }
+
+        th {
+            background-color: var(--primary);
+            color: var(--white);
+            font-weight: 700;
+        }
+
+        th:first-child {
+            border-top-left-radius: 8px;
+        }
+
+        th:last-child {
+            border-top-right-radius: 8px;
+            background-color: var(--accent);
+            color: var(--primary);
+        }
+
+        tr:hover td {
+            background-color: #f1f5f9;
+            transform: scaleX(1.01);
+        }
+
+        .highlight-cell {
+            font-weight: 600;
+            color: var(--primary);
+            background-color: rgba(212, 175, 55, 0.04);
+            border-left: 3px solid var(--accent);
+        }
+
+        /* Onboarding Portal Forms */
+        .portal-container {
+            max-width: 750px;
+            margin: 0 auto;
+            background: var(--white);
+            border-radius: 12px;
+            box-shadow: var(--luxury-shadow);
+            overflow: hidden;
+            border: 1px solid #e2e8f0;
+            min-height: 480px;
+            display: flex;
+            flex-direction: column;
+            transition: var(--transition-cool);
+        }
+
+        .portal-container:hover {
+            box-shadow: 0 30px 60px rgba(11, 26, 48, 0.16);
+        }
+
+        .portal-tabs {
+            display: flex;
+            background: var(--primary-light);
+        }
+
+        .portal-tab {
+            flex: 1;
+            padding: 22px;
+            text-align: center;
+            color: var(--white);
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition-fast);
+            border-bottom: 4px solid transparent;
+            font-size: 16px;
+        }
+
+        .portal-tab.active {
+            background: var(--primary);
+            border-bottom-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .portal-body {
+            padding: 45px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .portal-form {
+            display: none;
+            opacity: 0;
+            transform: scale(0.96) translateY(10px);
+            transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .portal-form.active {
+            display: block;
+            opacity: 1;
+            transform: scale(1) translateY(0);
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+            transform: translateY(0);
+            transition: var(--transition-fast);
+        }
+
+        .form-group:focus-within {
+            transform: translateY(-2px);
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: var(--primary);
+            font-size: 14.5px;
+        }
+
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 14px 18px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            outline: none;
+            transition: var(--transition-fast);
+            font-size: 15px;
+        }
+
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.18);
+        }
+
+        /* Success State */
+        .success-view {
+            text-align: center;
+            padding: 45px 25px;
+        }
+
+        .success-view i {
+            font-size: 70px;
+            color: var(--accent);
+            margin-bottom: 25px;
+            animation: bounceIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes bounceIn {
+            0% { transform: scale(0.3); opacity: 0; }
+            50% { transform: scale(1.1); }
+            70% { transform: scale(0.9); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        /* Interactive Pop-up Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(11, 26, 48, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-container {
+            background-color: var(--white);
+            max-width: 650px;
+            width: 90%;
+            border-radius: 12px;
+            border: 2px solid var(--accent);
+            overflow: hidden;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.3);
+            transform: scale(0.85);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .modal-header {
+            background-color: var(--primary);
+            color: var(--white);
+            padding: 25px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 3px solid var(--accent);
+        }
+
+        .modal-header h3 {
+            font-size: 22px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .modal-header h3 i {
+            color: var(--accent);
+        }
+
+        .close-modal {
+            color: var(--white);
+            font-size: 24px;
+            cursor: pointer;
+            transition: var(--transition-fast);
+        }
+
+        .close-modal:hover {
+            color: var(--accent);
+            transform: rotate(90deg);
+        }
+
+        .modal-content {
+            padding: 35px 30px;
+            font-size: 16px;
+            color: #475569;
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+
+        .modal-content h4 {
+            color: var(--primary);
+            font-size: 18px;
+            margin: 20px 0 10px;
+            font-weight: 700;
+        }
+
+        .modal-content ul {
+            list-style: none;
+            padding-left: 0;
+            margin-bottom: 20px;
+        }
+
+        .modal-content ul li {
+            position: relative;
+            padding-left: 25px;
+            margin-bottom: 12px;
+            line-height: 1.5;
+        }
+
+        .modal-content ul li::before {
+            content: '✓';
+            color: var(--accent);
+            position: absolute;
+            left: 0;
+            font-weight: 900;
+        }
+
+        /* Floating WhatsApp Button */
+        @keyframes floatPulse {
+            0% { box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3), 0 0 0 0 rgba(37, 211, 102, 0.5); }
+            70% { box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4), 0 0 0 15px rgba(37, 211, 102, 0); }
+            100% { box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3), 0 0 0 0 rgba(37, 211, 102, 0); }
+        }
+
+        .whatsapp-float {
+            position: fixed;
+            width: 60px;
+            height: 60px;
+            bottom: 40px;
+            right: 40px;
+            background-color: #25d366;
+            color: #fff;
+            border-radius: 50px;
+            text-align: center;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: var(--transition-cool);
+            animation: floatPulse 2s infinite;
+        }
+
+        .whatsapp-float:hover {
+            background-color: #128c7e;
+            transform: translateY(-8px) scale(1.08);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary);
+            color: var(--white);
+            padding: 80px 0 40px;
+            position: relative;
+            border-top: 3px solid var(--accent);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr 1fr;
+            gap: 50px;
+            margin-bottom: 50px;
+        }
+
+        .footer-col h4 {
+            color: var(--accent);
+            margin-bottom: 25px;
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .footer-col p {
+            color: #94a3b8;
+            margin-bottom: 12px;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-col ul a {
+            color: #94a3b8;
+            text-decoration: none;
+            transition: var(--transition-fast);
+            font-size: 15px;
+        }
+
+        .footer-col ul a:hover {
+            color: var(--accent);
+            padding-left: 8px;
+        }
+
+        .address-box {
+            background: rgba(255, 255, 255, 0.03);
+            border-left: 2px solid var(--accent);
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .address-box p {
+            margin-bottom: 0;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 40px;
+            border-top: 1px solid rgba(255,255,255,0.08);
+            color: #64748b;
+            font-size: 14.5px;
+        }
+
+        /* Responsive Breakpoints */
+        @media (max-width: 1024px) {
+            .solutions-grid, .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 30px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header { height: 80px; }
+            .nav-container { height: 80px; }
+            nav { display: none; }
+            .hamburger { display: block; }
+            .hero { margin-top: 80px; height: 85vh; }
+            .hero h1 { font-size: 34px; }
+            .hero p { font-size: 17px; }
+            .hero-buttons { flex-direction: column; gap: 15px; }
+            .nav-ctas { display: none; }
+            .solutions-grid, .features-grid { grid-template-columns: repeat(1, 1fr); gap: 40px; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 30px; }
+            .footer-grid { grid-template-columns: repeat(1, 1fr); gap: 40px; }
+            .logo-title { font-size: 18px; }
+            .logo-subtitle { font-size: 9px; }
+            .whatsapp-float { width: 50px; height: 50px; bottom: 20px; right: 20px; }
+            .portal-body { padding: 25px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header & Navigation -->
+    <header id="main-header">
+        <div class="container nav-container">
+            <a href="#" class="logo">
+                <div class="logo-img-wrapper">
+                    <div class="logo-img"></div>
+                </div>
+                <div class="logo-text">
+                    <span class="logo-title">CROWN</span>
+                    <span class="logo-subtitle">HOME MANAGEMENT</span>
+                </div>
+            </a>
+            <nav id="nav-menu">
+                <ul>
+                    <li><a href="#home" class="active">Home</a></li>
+                    <li><a href="#featured-properties">Properties</a></li>
+                    <li><a href="#solutions">Lettings & Solutions</a></li>
+                    <li><a href="#why-join">Why Choose Us</a></li>
+                    <li><a href="#portal">Portals</a></li>
+                </ul>
+            </nav>
+            <div class="nav-ctas">
+                <a href="#portal" onclick="switchPortal('tenant')" class="btn btn-outline btn-nav">Tenant Portal</a>
+                <a href="#portal" onclick="switchPortal('landlord')" class="btn btn-primary btn-nav">Landlord Portal</a>
+            </div>
+            <i class="fa-solid fa-bars hamburger" onclick="toggleMobileMenu()"></i>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-bg"></div>
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="reveal-scale">Connecting Premium Tenants with <span>Crown Home Management</span></h1>
+                <p class="reveal-up delay-1">We deliver elite, stress-free property letting, end-to-end asset management, and rapid customer support solutions throughout the United Kingdom.</p>
+                <div class="hero-buttons reveal-up delay-2">
+                    <a href="#featured-properties" class="btn btn-primary">Find a Property</a>
+                    <a href="#portal" onclick="switchPortal('landlord')" class="btn btn-outline">Let My Property</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Banner -->
+    <div class="stats-bar">
+        <div class="container stats-grid">
+            <div class="stat-item">
+                <h3>150+</h3>
+                <p>Properties Active</p>
+            </div>
+            <div class="stat-item">
+                <h3>100%</h3>
+                <p>Regulatory Compliance</p>
+            </div>
+            <div class="stat-item">
+                <h3>9AM - 7PM</h3>
+                <p>Operational Hours</p>
+            </div>
+            <div class="stat-item">
+                <h3>24/7</h3>
+                <p>Customer Support</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- REAL PROPERTIES SECTION (CMS DRIVEN) -->
+    <!-- ========================================== -->
+    <section id="featured-properties" style="background-color: var(--gray-bg);">
+        <div class="container">
+            <div class="section-title reveal-up">
+                <h2>Featured Properties</h2>
+                <p>Explore our premium live listings. Connect directly with Crown Home Management for inquiries.</p>
+            </div>
+            
+            <!-- JavaScript automatic yahan cards load karega -->
+            <div id="properties-grid" class="solutions-grid">
+                <!-- Loading State -->
+                <p style="text-align: center; grid-column: 1/-1; color: #64748b;">Loading premium listings...</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solutions Section -->
+    <section id="solutions">
+        <div class="container">
+            <div class="section-title reveal-up">
+                <h2>Comprehensive Property Solutions</h2>
+                <p>Our bespoke, end-to-end letting and management systems designed exclusively to protect and optimize residential assets.</p>
+            </div>
+            <div class="solutions-grid">
+                <!-- Service 1: Premium Lettings -->
+                <div class="solution-card reveal-left delay-1" onclick="openDetailsModal('lettings')">
+                    <div class="image-wrapper">
+                        <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=600&q=80" alt="Premium Lettings UK" class="solution-image">
+                    </div>
+                    <div class="solution-info">
+                        <i class="fa-solid fa-house-shield"></i>
+                        <h3>Premium Lettings</h3>
+                        <p>Rigorous, multidimensional tenant vetting, continuous visual inventory checks, and strategic staging to ensure your property attracts and secures top-tier occupants.</p>
+                        <span class="learn-more-link">Learn More <i class="fa-solid fa-arrow-right-long" style="font-size: 12px; margin-left: 5px;"></i></span>
+                    </div>
+                </div>
+                <!-- Service 2: Full Management -->
+                <div class="solution-card reveal-up delay-2" onclick="openDetailsModal('management')">
+                    <div class="image-wrapper">
+                        <img src="https://images.unsplash.com/photo-1554469384-e58fac16e23a?auto=format&fit=crop&w=600&q=80" alt="Full Asset Property Management" class="solution-image">
+                    </div>
+                    <div class="solution-info">
+                        <i class="fa-solid fa-file-invoice-dollar"></i>
+                        <h3>Full Management</h3>
+                        <p>Total asset management including proactive legal compliance, direct rent collection, digital photo inspections, and seamless tenancy renewals.</p>
+                        <span class="learn-more-link">Learn More <i class="fa-solid fa-arrow-right-long" style="font-size: 12px; margin-left: 5px;"></i></span>
+                    </div>
+                </div>
+                <!-- Service 3: Maintenance -->
+                <div class="solution-card reveal-right delay-3" onclick="openDetailsModal('maintenance')">
+                    <div class="image-wrapper">
+                        <img src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=600&q=80" alt="Residential Maintenance Support" class="solution-image">
+                    </div>
+                    <div class="solution-info">
+                        <i class="fa-solid fa-screwdriver-wrench"></i>
+                        <h3>Maintenance & Compliance</h3>
+                        <p>Rapid emergency coordination, vetted contractor deployments, and full administration of mandatory safety certifications (Gas Safe, EICR, EPC).</p>
+                        <span class="learn-more-link">Learn More <i class="fa-solid fa-arrow-right-long" style="font-size: 12px; margin-left: 5px;"></i></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us Section -->
+    <section id="why-join" class="why-join">
+        <div class="container">
+            <div class="section-title reveal-up">
+                <h2>Why Choose Crown Home Management</h2>
+                <p>We redefine rental market standards, maximizing landlord yield while offering unrivaled tenant stability.</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card reveal-up delay-1">
+                    <div class="feature-info">
+                        <h3>Guaranteed Rent Peace</h3>
+                        <p>Secure fixed monthly returns via corporate partnerships and professional multi-year agreements, fully mitigating standard tenant default risks.</p>
+                    </div>
+                </div>
+                <div class="feature-card reveal-up delay-2">
+                    <div class="feature-info">
+                        <h3>Vanguard Compliance</h3>
+                        <p>Total regulatory coverage under current UK housing legislation, guaranteeing immediate adherence to changing compliance statutes.</p>
+                    </div>
+                </div>
+                <div class="feature-card reveal-up delay-3">
+                    <div class="feature-info">
+                        <h3>Premium Staging</h3>
+                        <p>Bespoke visual optimization strategies applied across all managed portfolios to significantly maximize tenant longevity and property prestige.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Comparison Table -->
+            <div class="comparison-wrapper reveal-scale">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Core Service Standards</th>
+                            <th>Traditional Lettings</th>
+                            <th>Crown Home Management</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Tenant Verification</td>
+                            <td>Standard Credit Check Only</td>
+                            <td class="highlight-cell">Multidimensional Background & Reference Auditing</td>
+                        </tr>
+                        <tr>
+                            <td>Portfolio Oversight</td>
+                            <td>Reactive/Annual Call-outs</td>
+                            <td class="highlight-cell">Proactive Technical Digital Visual Inspections</td>
+                        </tr>
+                        <tr>
+                            <td>Emergency Coordination</td>
+                            <td>Delayed/Office Hours Dependent</td>
+                            <td class="highlight-cell">Direct 24/7 Support Portal Deployment</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portals Section -->
+    <section id="portal">
+        <div class="container">
+            <div class="section-title reveal-up">
+                <h2>Interactive Portals</h2>
+                <p>Submit applications, upload safe documents, or initiate secure client requests directly into our central system.</p>
+            </div>
+            <div class="portal-container reveal-scale">
+                <div class="portal-tabs">
+                    <div id="tab-tenant" class="portal-tab active" onclick="switchPortal('tenant')">Tenant Inquiries</div>
+                    <div id="tab-landlord" class="portal-tab" onclick="switchPortal('landlord')">Landlord Onboarding</div>
+                </div>
+                <div class="portal-body">
+                    <!-- Formspree Integration Links inside forms -->
+                    <form id="tenant-form" class="portal-form active" action="https://formspree.io/f/xanygqpk" method="POST">
+                        <div class="form-group">
+                            <label>Full Name</label>
+                            <input type="text" name="name" required placeholder="John Doe">
+                        </div>
+                        <div class="form-group">
+                            <label>Email Address</label>
+                            <input type="email" name="email" required placeholder="john@example.com">
+                        </div>
+                        <div class="form-group">
+                            <label>Desired Location & Property Type</label>
+                            <input type="text" name="property_interest" required placeholder="e.g. 2 Bed Apartment, Manchester">
+                        </div>
+                        <div class="form-group">
+                            <label>Additional Requirements</label>
+                            <textarea name="message" rows="4" placeholder="Any specific needs or viewing schedules..."></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">Submit Inquiry</button>
+                    </form>
+
+                    <form id="landlord-form" class="portal-form" action="https://formspree.io/f/xanygqpk" method="POST">
+                        <div class="form-group">
+                            <label>Landlord Name</label>
+                            <input type="text" name="name" required placeholder="Sarah Jenkins">
+                        </div>
+                        <div class="form-group">
+                            <label>Contact Email</label>
+                            <input type="email" name="email" required placeholder="sarah@example.com">
+                        </div>
+                        <div class="form-group">
+                            <label>Property Postcode & Portfolio Size</label>
+                            <input type="text" name="portfolio_details" required placeholder="e.g. M1 1AG, 3 Residential Houses">
+                        </div>
+                        <div class="form-group">
+                            <label>Select Primary Management Objective</label>
+                            <select name="objective" required>
+                                <option value="Full Let & Management">Full Let & Asset Management</option>
+                                <option value="Rent to Rent / Corporate Guarantee">Rent to Rent / Guaranteed Corporate Contract</option>
+                                <option value="Compliance Audit Only">Legislative Compliance Check</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">Submit Portfolio for Audit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Floating WhatsApp -->
+    <a href="https://wa.me/447442127598" class="whatsapp-float" target="_blank">
+        <i class="fa-brands fa-whatsapp" style="font-size: 32px;"></i>
+    </a>
+
+    <!-- Details Pop-up Modal -->
+    <div id="details-modal" class="modal-overlay" onclick="closeDetailsModal(event)">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3 id="modal-title-text"><i class="fa-solid fa-circle-info"></i> Service Details</h3>
+                <span class="close-modal" onclick="document.getElementById('details-modal').style.display='none'">&times;</span>
+            </div>
+            <div id="modal-body-content" class="modal-content">
+                <!-- Content injected dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-grid">
+            <div class="footer-col">
+                <h4>Crown Home Management</h4>
+                <p>An elite UK lettings agency executing corporate-standard residential property management and compliant asset optimization.</p>
+                <div class="address-box">
+                    <p><strong>Corporate Contact Email:</strong></p>
+                    <p style="color: var(--accent);">info@crownhomemanagement.co.uk</p>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h4>Quick Navigation</h4>
+                <ul>
+                    <li><a href="#home">Home Base</a></li>
+                    <li><a href="#featured-properties">Live Listings</a></li>
+                    <li><a href="#solutions">Management System</a></li>
+                    <li><a href="#why-join">Yield Advantages</a></li>
+                    <li><a href="#portal">Secure Portals</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Operational Status</h4>
+                <p><i class="fa-solid fa-clock" style="color: var(--accent); margin-right: 8px;"></i> 09:00 AM - 07:00 PM (GMT)</p>
+                <p><i class="fa-solid fa-headset" style="color: var(--accent); margin-right: 8px;"></i> 24/7 Digital Inquiry Support</p>
+                <p style="margin-top: 15px; font-size: 13px; color: #64748b;">Fully registered and certified under UK Property Ombudsman schemes.</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Crown Home Management. All Premium Intellectual Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Core Scripts -->
+    <script>
+        // Smooth Animations On Scroll Trigger
+        const revealElements = document.querySelectorAll('.reveal-up, .reveal-left, .reveal-right, .reveal-scale');
+        
+        const checkReveal = () => {
+            const triggerBottom = window.innerHeight * 0.85;
+            revealElements.forEach(el => {
+                const elTop = el.getBoundingClientRect().top;
+                if (elTop < triggerBottom) {
+                    el.classList.add('active-reveal');
+                }
+            });
+        };
+
+        window.addEventListener('scroll', checkReveal);
+        window.addEventListener('load', () => {
+            setTimeout(checkReveal, 200); // Trigger hero instantly
+        });
+
+        // Mobile Menu Toggle Logic
+        function toggleMobileMenu() {
+            const nav = document.getElementById('nav-menu');
+            if(nav.style.display === 'block') {
+                nav.style.display = 'none';
+            } else {
+                nav.style.display = 'block';
+                nav.style.background = 'var(--primary)';
+                nav.style.position = 'absolute';
+                nav.style.top = '90px';
+                nav.style.left = '0';
+                nav.style.width = '100%';
+                nav.style.padding = '20px';
+                nav.style.textAlign = 'center';
+                const ul = nav.querySelector('ul');
+                ul.style.flexDirection = 'column';
+                ul.style.gap = '15px';
+            }
+        }
+
+        // Tab Switcher logic for Portal
+        function switchPortal(type) {
+            document.querySelectorAll('.portal-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.portal-form').forEach(f => f.classList.remove('active'));
+            
+            if(type === 'tenant') {
+                document.getElementById('tab-tenant').classList.add('active');
+                document.getElementById('tenant-form').classList.add('active');
+            } else {
+                document.getElementById('tab-landlord').classList.add('active');
+                document.getElementById('landlord-form').classList.add('active');
+            }
+        }
+
+        // Modal Content Injection Data
+        const modalData = {
+            lettings: `
+                <h4>Elite Tenant Placement Framework</h4>
+                <p>We execute advanced marketing across premium digital channels, combined with precise, asset-protective tenant tracking protocols:</p>
+                <ul>
+                    <li>Direct verification of income streams, employer credentials, and past history.</li>
+                    <li>Comprehensive digital visual room-by-room inventories captured prior to keys handoff.</li>
+                    <li>Strategic interior staging consulting designed to unlock maximum long-term corporate tenant interest.</li>
+                </ul>
+            `,
+            management: `
+                <h4>End-To-End Asset Stewardship</h4>
+                <p>Complete peace-of-mind management systems designed to minimize landlord touchpoints entirely:</p>
+                <ul>
+                    <li>Automated digital accounts with immediate, direct monthly statement distributions.</li>
+                    <li>Periodic routine property health checks complete with photo-evidence records.</li>
+                    <li>Efficient handling of contract terminations, complex dispute resolutions, and renewals.</li>
+                </ul>
+            `,
+            maintenance: `
+                <h4>Vetted Engineering & Regulatory Oversight</h4>
+                <p>Protecting your brick-and-mortar investments through strategic maintenance loops and strict statutory protection checks:</p>
+                <ul>
+                    <li>24/7 structural support monitoring networks to process tenant issues instantly.</li>
+                    <li>Preferential contractor rates with certified, licensed tradespeople.</li>
+                    <li>Automatic compliance scheduling for critical Landlord Gas Safety Records, EICRs, and smoke/CO alarms.</li>
+                </ul>
+            `
+        };
+
+        function openDetailsModal(key) {
+            const overlay = document.getElementById('details-modal');
+            const container = overlay.querySelector('.modal-container');
+            const body = document.getElementById('modal-body-content');
+            
+            body.innerHTML = modalData[key];
+            overlay.style.display = 'flex';
+            setTimeout(() => {
+                overlay.style.opacity = '1';
+                container.style.transform = 'scale(1)';
+            }, 10);
+        }
+
+        function closeDetailsModal(e) {
+            if(e.target.classList.contains('modal-overlay') || e.target.classList.contains('close-modal')) {
+                const overlay = document.getElementById('details-modal');
+                const container = overlay.querySelector('.modal-container');
+                overlay.style.opacity = '0';
+                container.style.transform = 'scale(0.85)';
+                setTimeout(() => { overlay.style.display = 'none'; }, 300);
+            }
+        }
+    </script>
+
+    <!-- ========================================== -->
+    <!-- SCRIPT TO FETCH REAL-TIME PROPERTIES -->
+    <!-- ========================================== -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const propertiesGrid = document.getElementById('properties-grid');
+            
+            // Decap CMS data reading from the live folder
+            fetch('/_properties/index.json') 
+                .then(response => {
+                    if (!response.ok) throw new Error("No properties found");
+                    return response.json();
+                })
+                .then(data => {
+                    propertiesGrid.innerHTML = ''; // Clear loading text
+                    
+                    if(data.length === 0) {
+                        propertiesGrid.innerHTML = '<p style="text-align: center; grid-column: 1/-1; color: #64748b;">No properties available at the moment.</p>';
+                        return;
+                    }
+
+                    data.forEach(item => {
+                        const card = document.createElement('div');
+                        card.className = 'solution-card reveal-up active-reveal';
+                        
+                        card.innerHTML = `
+                            <div class="image-wrapper">
+                                <img src="${item.image}" alt="${item.title}" class="solution-image">
+                            </div>
+                            <div class="solution-info">
+                                <i class="fa-solid fa-key"></i>
+                                <h3>${item.title}</h3>
+                                <p><i class="fa-solid fa-map-marker-alt" style="color: var(--accent); margin:0; width:auto; height:auto; box-shadow:none; border:none; background:none;"></i> ${item.location}</p>
+                                
+                                <div style="display: flex; justify-content: center; gap: 15px; margin: 15px 0; font-size: 14px; color: #475569;">
+                                    <span><i class="fa-solid fa-bed" style="margin:0; width:auto; height:auto; box-shadow:none; border:none; background:none;"></i> ${item.bedrooms} Beds</span>
+                                    <span><i class="fa-solid fa-bath" style="margin:0; width:auto; height:auto; box-shadow:none; border:none; background:none;"></i> ${item.bathrooms} Baths</span>
+                                    <span><i class="fa-solid fa-couch" style="margin:0; width:auto; height:auto; box-shadow:none; border:none; background:none;"></i> ${item.furnished}</span>
+                                </div>
+                                
+                                <a href="#portal" onclick="switchPortal('tenant')" class="btn btn-primary" style="display:block; margin-top:15px; font-size:14px; padding: 10px;">Inquire Now</a>
+                            </div>
+                        `;
+                        propertiesGrid.appendChild(card);
+                    });
+                })
+                .catch(err => {
+                    console.log(err);
+                    propertiesGrid.innerHTML = '<p style="text-align: center; grid-column: 1/-1; color: #64748b;">Currently updates are live via portal. Please use form below to inquire.</p>';
+                });
+        });
+    </script>
+</body>
+</html>

@@ -1,22 +1,17 @@
 backend:
   name: git-gateway
-  branch: main
+  branch: main # ya master, jo bhi aapki repository ki default branch hai
 
-media_folder: "images/uploads"
-public_folder: "/images/uploads"
+media_folder: "images"
+public_folder: "/images"
 
 collections:
   - name: "properties"
-    label: "Featured Properties"
-    folder: "_properties"
+    label: "Properties"
+    folder: "properties"
     create: true
     slug: "{{slug}}"
-    extension: "json"
-    format: "json"
     fields:
-      - { label: "Property Title", name: "title", widget: "string" }
-      - { label: "Location / City", name: "location", widget: "string" }
-      - { label: "Property Main Image", name: "image", widget: "image" }
-      - { label: "Number of Bedrooms", name: "bedrooms", widget: "number", value_type: "int", default: 2 }
-      - { label: "Number of Bathrooms", name: "bathrooms", widget: "number", value_type: "int", default: 1 }
-      - { label: "Furnished Status", name: "furnished", widget: "select", options: ["Fully Furnished", "Part-Furnished", "Unfurnished"] }
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Description", name: "body", widget: "markdown"}
+      - {label: "Image", name: "image", widget: "image"}
